@@ -1,0 +1,1933 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>אזרחות Play — שמונת העקרונות הדמוקרטיים</title>
+  <style>
+    :root {
+      --bg: #fff9f2;
+      --surface: #ffffff;
+      --surface-soft: #fff3e6;
+      --text: #1f2430;
+      --muted: #5c6475;
+      --border: #ecdcc9;
+      --primary: #ff6b4a;
+      --primary-dark: #e65130;
+      --secondary: #4c6ef5;
+      --teal: #12b886;
+      --purple: #845ef7;
+      --amber: #f59f00;
+      --pink: #e64980;
+      --danger: #fa5252;
+      --success: #20c997;
+      --shadow: 0 10px 26px rgba(31, 36, 48, 0.08);
+      --radius: 20px;
+      --radius-sm: 12px;
+    }
+
+    * {
+      box-sizing: border-box;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    body {
+      margin: 0;
+      font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      background:
+        radial-gradient(circle at 10% 10%, #ffe8d6 0%, transparent 35%),
+        radial-gradient(circle at 90% 15%, #e7f5ff 0%, transparent 35%),
+        radial-gradient(circle at 80% 85%, #f3d9fa 0%, transparent 35%),
+        var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      line-height: 1.55;
+    }
+
+    .app {
+      max-width: 980px;
+      margin: 0 auto;
+      padding: 18px 16px 60px;
+    }
+
+    /* Header */
+    .hero {
+      background: linear-gradient(135deg, #ff7a59 0%, #ff9f43 45%, #845ef7 100%);
+      color: #fff;
+      border-radius: 24px;
+      padding: 20px 22px;
+      box-shadow: var(--shadow);
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 14px;
+      margin-bottom: 18px;
+    }
+
+    .hero-title h1 {
+      margin: 0 0 4px;
+      font-size: clamp(1.35rem, 3vw, 1.85rem);
+      font-weight: 800;
+      letter-spacing: -0.3px;
+    }
+
+    .hero-title p {
+      margin: 0;
+      font-size: 0.95rem;
+      opacity: 0.94;
+    }
+
+    .stats-bar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      align-items: center;
+    }
+
+    .stat-pill {
+      background: rgba(255, 255, 255, 0.22);
+      backdrop-filter: blur(6px);
+      border: 1px solid rgba(255, 255, 255, 0.35);
+      border-radius: 999px;
+      padding: 6px 13px;
+      font-weight: 700;
+      font-size: 0.9rem;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .icon-btn {
+      background: rgba(255, 255, 255, 0.22);
+      border: 1px solid rgba(255, 255, 255, 0.35);
+      color: #fff;
+      border-radius: 999px;
+      padding: 6px 12px;
+      font-size: 0.85rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: transform 0.15s ease, background 0.15s ease;
+    }
+
+    .icon-btn:hover {
+      background: rgba(255, 255, 255, 0.34);
+      transform: translateY(-1px);
+    }
+
+    /* Mastery Strip */
+    .mastery-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 14px 16px;
+      box-shadow: 0 4px 14px rgba(0, 0, 0, 0.04);
+      margin-bottom: 18px;
+    }
+
+    .mastery-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 10px;
+      flex-wrap: wrap;
+    }
+
+    .mastery-header h2 {
+      margin: 0;
+      font-size: 1rem;
+      font-weight: 800;
+    }
+
+    .mastery-hint {
+      font-size: 0.82rem;
+      color: var(--muted);
+    }
+
+    .principles-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 8px;
+    }
+
+    @media (max-width: 720px) {
+      .principles-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    .principle-chip {
+      background: #fafbfc;
+      border: 2px solid #e9ecef;
+      border-radius: 14px;
+      padding: 8px 10px;
+      cursor: pointer;
+      text-align: right;
+      transition: transform 0.14s ease, border-color 0.14s ease, box-shadow 0.14s ease;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      font-family: inherit;
+    }
+
+    .principle-chip:hover {
+      transform: translateY(-2px);
+      border-color: var(--secondary);
+      box-shadow: 0 6px 14px rgba(76, 110, 245, 0.12);
+    }
+
+    .principle-chip.mastered {
+      background: linear-gradient(135deg, #fff9db 0%, #fff3bf 100%);
+      border-color: #fcc419;
+    }
+
+    .chip-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-weight: 800;
+      font-size: 0.88rem;
+      color: var(--text);
+    }
+
+    .chip-bar {
+      height: 6px;
+      background: #e9ecef;
+      border-radius: 999px;
+      overflow: hidden;
+    }
+
+    .chip-fill {
+      height: 100%;
+      background: linear-gradient(90deg, var(--teal), var(--secondary));
+      border-radius: 999px;
+      transition: width 0.3s ease;
+    }
+
+    .principle-chip.mastered .chip-fill {
+      background: linear-gradient(90deg, #f59f00, #ff6b4a);
+    }
+
+    /* Navigation Tabs */
+    .nav-tabs {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 10px;
+      margin-bottom: 18px;
+    }
+
+    @media (max-width: 680px) {
+      .nav-tabs {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    .tab-btn {
+      background: var(--surface);
+      border: 2px solid var(--border);
+      border-radius: 16px;
+      padding: 12px 10px;
+      cursor: pointer;
+      font-family: inherit;
+      font-weight: 800;
+      font-size: 0.94rem;
+      color: var(--text);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 4px;
+      transition: all 0.16s ease;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.03);
+    }
+
+    .tab-btn span.sub {
+      font-size: 0.76rem;
+      font-weight: 600;
+      color: var(--muted);
+    }
+
+    .tab-btn:hover {
+      transform: translateY(-2px);
+      border-color: var(--primary);
+    }
+
+    .tab-btn.active {
+      background: linear-gradient(135deg, #4c6ef5 0%, #845ef7 100%);
+      color: #fff;
+      border-color: transparent;
+      box-shadow: 0 8px 20px rgba(76, 110, 245, 0.28);
+    }
+
+    .tab-btn.active span.sub {
+      color: rgba(255, 255, 255, 0.9);
+    }
+
+    /* Game Panels */
+    .panel {
+      display: none;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 24px;
+      padding: 22px;
+      box-shadow: var(--shadow);
+      animation: fadeIn 0.22s ease;
+    }
+
+    .panel.active {
+      display: block;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(6px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .panel-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-bottom: 16px;
+      padding-bottom: 12px;
+      border-bottom: 2px dashed var(--border);
+    }
+
+    .panel-head h2 {
+      margin: 0;
+      font-size: 1.25rem;
+      font-weight: 800;
+    }
+
+    .badge {
+      background: #edf2ff;
+      color: #3b5bdb;
+      padding: 5px 12px;
+      border-radius: 999px;
+      font-weight: 800;
+      font-size: 0.85rem;
+    }
+
+    .badge.warm {
+      background: #fff4e6;
+      color: #d9480f;
+    }
+
+    .badge.green {
+      background: #e6fcf5;
+      color: #099268;
+    }
+
+    /* Scenario Box */
+    .story-box {
+      background: linear-gradient(135deg, #f8f9ff 0%, #fff5f8 100%);
+      border: 2px solid #dbe4ff;
+      border-radius: 18px;
+      padding: 18px;
+      font-size: 1.06rem;
+      font-weight: 600;
+      margin-bottom: 16px;
+    }
+
+    .question-prompt {
+      font-weight: 800;
+      color: var(--secondary);
+      margin-bottom: 12px;
+      font-size: 1rem;
+    }
+
+    .options-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 10px;
+    }
+
+    @media (max-width: 620px) {
+      .options-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .opt-btn {
+      background: #fff;
+      border: 2px solid #dee2e6;
+      border-radius: 14px;
+      padding: 13px 14px;
+      font-family: inherit;
+      font-size: 0.96rem;
+      font-weight: 700;
+      color: var(--text);
+      cursor: pointer;
+      text-align: right;
+      transition: all 0.14s ease;
+    }
+
+    .opt-btn:hover:not(:disabled) {
+      border-color: var(--secondary);
+      background: #f8f9ff;
+      transform: translateY(-1px);
+    }
+
+    .opt-btn.correct {
+      background: #e6fcf5;
+      border-color: var(--teal);
+      color: #087f5b;
+    }
+
+    .opt-btn.wrong {
+      background: #fff5f5;
+      border-color: var(--danger);
+      color: #c92a2a;
+    }
+
+    .feedback-box {
+      margin-top: 16px;
+      border-radius: 16px;
+      padding: 14px 16px;
+      font-size: 0.96rem;
+      display: none;
+    }
+
+    .feedback-box.show {
+      display: block;
+      animation: fadeIn 0.2s ease;
+    }
+
+    .feedback-box.good {
+      background: #e6fcf5;
+      border: 2px solid #63e6be;
+      color: #087f5b;
+    }
+
+    .feedback-box.bad {
+      background: #fff5f5;
+      border: 2px solid #ffa8a8;
+      color: #c92a2a;
+    }
+
+    .btn {
+      background: linear-gradient(135deg, var(--primary) 0%, #ff8743 100%);
+      color: #fff;
+      border: none;
+      border-radius: 14px;
+      padding: 11px 20px;
+      font-family: inherit;
+      font-size: 0.96rem;
+      font-weight: 800;
+      cursor: pointer;
+      transition: transform 0.14s ease, box-shadow 0.14s ease;
+      box-shadow: 0 6px 14px rgba(255, 107, 74, 0.26);
+    }
+
+    .btn:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 8px 18px rgba(255, 107, 74, 0.34);
+    }
+
+    .btn.secondary {
+      background: linear-gradient(135deg, var(--secondary) 0%, var(--purple) 100%);
+      box-shadow: 0 6px 14px rgba(76, 110, 245, 0.24);
+    }
+
+    .btn.ghost {
+      background: #f1f3f5;
+      color: var(--text);
+      box-shadow: none;
+    }
+
+    .btn-row {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-top: 14px;
+      align-items: center;
+    }
+
+    /* Speed Sort Game */
+    .deck-pills {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-bottom: 16px;
+    }
+
+    .deck-pill {
+      background: #f8f9fa;
+      border: 2px solid #dee2e6;
+      border-radius: 999px;
+      padding: 7px 14px;
+      font-family: inherit;
+      font-weight: 700;
+      font-size: 0.86rem;
+      cursor: pointer;
+      color: var(--text);
+    }
+
+    .deck-pill.active {
+      background: var(--purple);
+      border-color: var(--purple);
+      color: #fff;
+    }
+
+    .sort-card {
+      background: linear-gradient(135deg, #fff9db 0%, #fff4e6 100%);
+      border: 2px solid #ffd43b;
+      border-radius: 20px;
+      padding: 24px 18px;
+      text-align: center;
+      font-size: 1.15rem;
+      font-weight: 800;
+      margin-bottom: 16px;
+      min-height: 108px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .sort-buckets {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      gap: 10px;
+    }
+
+    .bucket-btn {
+      background: #fff;
+      border: 2px solid #ced4da;
+      border-radius: 16px;
+      padding: 15px 10px;
+      font-family: inherit;
+      font-size: 0.98rem;
+      font-weight: 800;
+      cursor: pointer;
+      color: var(--text);
+      transition: all 0.14s ease;
+    }
+
+    .bucket-btn:hover {
+      border-color: var(--purple);
+      background: #f3f0ff;
+      transform: translateY(-2px);
+    }
+
+    /* Recall Game */
+    .recall-input-row {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 14px;
+    }
+
+    .text-input {
+      flex: 1;
+      padding: 12px 14px;
+      border: 2px solid #ced4da;
+      border-radius: 14px;
+      font-family: inherit;
+      font-size: 1rem;
+      font-weight: 600;
+      outline: none;
+    }
+
+    .text-input:focus {
+      border-color: var(--secondary);
+    }
+
+    .slots-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 8px;
+      margin-bottom: 18px;
+    }
+
+    @media (max-width: 680px) {
+      .slots-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    .recall-slot {
+      background: #f8f9fa;
+      border: 2px dashed #ced4da;
+      border-radius: 14px;
+      padding: 10px;
+      text-align: center;
+      font-weight: 800;
+      font-size: 0.9rem;
+      color: var(--muted);
+      min-height: 52px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .recall-slot.found {
+      background: #e6fcf5;
+      border: 2px solid var(--teal);
+      color: #087f5b;
+    }
+
+    .trap-cards {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .trap-chip {
+      background: #fff;
+      border: 2px solid #dee2e6;
+      border-radius: 12px;
+      padding: 8px 12px;
+      font-family: inherit;
+      font-weight: 700;
+      font-size: 0.9rem;
+      cursor: pointer;
+    }
+
+    .trap-chip.selected-good {
+      background: #e6fcf5;
+      border-color: var(--teal);
+      color: #087f5b;
+    }
+
+    .trap-chip.selected-bad {
+      background: #fff5f5;
+      border-color: var(--danger);
+      color: #c92a2a;
+    }
+
+    /* Builder Game */
+    .step-card {
+      background: #f8f9fa;
+      border: 1px solid #e9ecef;
+      border-radius: 16px;
+      padding: 14px;
+      margin-bottom: 12px;
+    }
+
+    .step-card h3 {
+      margin: 0 0 8px;
+      font-size: 0.98rem;
+      color: var(--secondary);
+    }
+
+    .rubric-box {
+      background: #fff9db;
+      border: 2px solid #fcc419;
+      border-radius: 16px;
+      padding: 14px 16px;
+      margin-top: 14px;
+      display: none;
+    }
+
+    .rubric-box.show {
+      display: block;
+      animation: fadeIn 0.2s ease;
+    }
+
+    /* Modal */
+    dialog.cheat-modal {
+      border: none;
+      border-radius: 24px;
+      padding: 0;
+      max-width: 540px;
+      width: 92%;
+      box-shadow: 0 24px 60px rgba(0, 0, 0, 0.25);
+    }
+
+    dialog.cheat-modal::backdrop {
+      background: rgba(31, 36, 48, 0.55);
+      backdrop-filter: blur(3px);
+    }
+
+    .modal-inner {
+      padding: 22px;
+      background: #fff;
+      border-radius: 24px;
+    }
+
+    .modal-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 12px;
+    }
+
+    .modal-head h3 {
+      margin: 0;
+      font-size: 1.25rem;
+    }
+
+    .close-x {
+      background: #f1f3f5;
+      border: none;
+      width: 34px;
+      height: 34px;
+      border-radius: 50%;
+      font-size: 1.1rem;
+      font-weight: 800;
+      cursor: pointer;
+    }
+
+    .modal-tag {
+      display: inline-block;
+      background: #edf2ff;
+      color: #3b5bdb;
+      padding: 4px 10px;
+      border-radius: 999px;
+      font-size: 0.82rem;
+      font-weight: 800;
+      margin-bottom: 10px;
+    }
+
+    .modal-list {
+      margin: 8px 0 0;
+      padding-right: 18px;
+    }
+
+    .modal-list li {
+      margin-bottom: 6px;
+    }
+
+    .trap-alert {
+      background: #fff5f5;
+      border: 1px solid #ffc9c9;
+      color: #c92a2a;
+      border-radius: 12px;
+      padding: 10px 12px;
+      margin-top: 12px;
+      font-size: 0.9rem;
+      font-weight: 700;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        transition-duration: 0.01ms !important;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="app">
+    <!-- Hero Header -->
+    <header class="hero">
+      <div class="hero-title">
+        <h1>אזרחות Play 🎓 — שמונת העקרונות</h1>
+        <p>משחקי הכנה מלאים לבוחן של ערן • עובד גם בטלפון וגם במחשב</p>
+      </div>
+      <div class="stats-bar">
+        <div class="stat-pill">⭐ <span id="xpVal">0</span> XP</div>
+        <div class="stat-pill">🔥 רצף: <span id="streakVal">0</span> (שיא: <span id="bestStreakVal">0</span>)</div>
+        <div class="stat-pill">🏅 מדליות: <span id="medalsVal">0</span>/8</div>
+        <button class="icon-btn" id="soundToggle" type="button" aria-label="הפעלת או כיבוי צלילים">🔊 צליל</button>
+        <button class="icon-btn" id="resetBtn" type="button">🔄 איפוס</button>
+      </div>
+    </header>
+
+    <!-- 8 Principles Mastery Strip -->
+    <section class="mastery-card" aria-label="מדליות שליטה בשמונת העקרונות">
+      <div class="mastery-header">
+        <h2>🏅 מפת השליטה שלך (לחצי על עיקרון לפתיחת כרטיסיית סיכום!)</h2>
+        <span class="mastery-hint">3 תשובות נכונות על עיקרון = מדליית זהב</span>
+      </div>
+      <div class="principles-grid" id="masteryGrid"></div>
+    </section>
+
+    <!-- Game Mode Tabs -->
+    <nav class="nav-tabs" aria-label="בחירת משחק" style="grid-template-columns: repeat(5, 1fr);">
+      <button class="tab-btn active" data-tab="detective" type="button">
+        <span>🔍 בלש אירועים</span>
+        <span class="sub">זיהוי עקרונות ומלכודות</span>
+      </button>
+      <button class="tab-btn" data-tab="sort" type="button">
+        <span>⚡ מיון בזק</span>
+        <span class="sub">פורמלי • עבריינות • פס"ה</span>
+      </button>
+      <button class="tab-btn" data-tab="recall" type="button">
+        <span>🧠 אתגר השליפה</span>
+        <span class="sub">ה-8 מהזיכרון + אר"י</span>
+      </button>
+      <button class="tab-btn" data-tab="builder" type="button">
+        <span>✍️ ציין–הצג–הסבר</span>
+        <span class="sub">אימון תשובה לבוחן</span>
+      </button>
+      <button class="tab-btn" data-tab="summary" type="button">
+        <span>📖 שליף מלא</span>
+        <span class="sub">כל ה-8 במסך אחד</span>
+      </button>
+    </nav>
+
+    <!-- Panel 1: Case Detective -->
+    <section class="panel active" id="panel-detective">
+      <div class="panel-head">
+        <h2>🔍 בלש אירועים — מצאי את העיקרון המדויק</h2>
+        <span class="badge" id="detectiveCounter">שאלה 1 מתוך 16</span>
+      </div>
+      <div class="story-box" id="detectiveStory"></div>
+      <div class="question-prompt" id="detectivePrompt"></div>
+      <div class="options-grid" id="detectiveOptions"></div>
+      <div class="feedback-box" id="detectiveFeedback"></div>
+      <div class="btn-row">
+        <button class="btn" id="detectiveNextBtn" type="button" style="display:none;">לשאלה הבאה ⬅️</button>
+        <button class="btn ghost" id="detectiveShuffleBtn" type="button">ערבב שאלות 🔀</button>
+      </div>
+    </section>
+
+    <!-- Panel 2: Speed Sort -->
+    <section class="panel" id="panel-sort">
+      <div class="panel-head">
+        <h2>⚡ מיון בזק — סווגי הכי מהר ונכון</h2>
+        <div style="display:flex;gap:8px;align-items:center;">
+          <span class="badge warm" id="sortTimerBadge">⏱️ מצב רגוע</span>
+          <span class="badge green" id="sortScoreBadge">ניקוד בסיבוב: 0</span>
+        </div>
+      </div>
+
+      <div class="deck-pills" id="sortDecks">
+        <button class="deck-pill active" data-deck="formal" type="button">פורמלי מול לא-פורמלי</button>
+        <button class="deck-pill" data-deck="crime" type="button">3 סוגי עבריינות</button>
+        <button class="deck-pill" data-deck="orders" type="button">פקודה בלתי חוקית / בעליל</button>
+        <button class="deck-pill" data-deck="pse" type="button">פלורליזם • סובלנות • הסכמיות</button>
+        <button class="deck-pill" data-deck="majority" type="button">סוגי רוב (רגיל/מוחלט/מיוחס)</button>
+      </div>
+
+      <div class="btn-row" style="margin-top:0;margin-bottom:14px;">
+        <button class="btn secondary" id="sortTimerToggle" type="button">הפעל אתגר 30 שניות ⏱️</button>
+        <button class="btn ghost" id="sortRestartBtn" type="button">סיבוב חדש 🔄</button>
+      </div>
+
+      <div class="sort-card" id="sortCardText"></div>
+      <div class="sort-buckets" id="sortBuckets"></div>
+      <div class="feedback-box" id="sortFeedback"></div>
+    </section>
+
+    <!-- Panel 3: Recall Challenge -->
+    <section class="panel" id="panel-recall">
+      <div class="panel-head">
+        <h2>🧠 אתגר השליפה — בלי להציץ!</h2>
+        <span class="badge" id="recallFoundBadge">נמצאו: 0 / 8</span>
+      </div>
+
+      <p style="margin-top:0;color:var(--muted);font-weight:600;">
+        טיפ הזיכרון שלנו: <strong>2 ש' — 4 ה' — פ-ס</strong> (שלטון העם, שלטון החוק • הכרעת הרוב, הגבלת השלטון, הפרדת רשויות, הסכמיות • פלורליזם, סובלנות)
+      </p>
+
+      <div class="btn-row" style="margin-top:0;margin-bottom:14px;">
+        <button class="btn secondary" id="modeTypeBtn" type="button">✍️ מצב הקלדה מהראש</button>
+        <button class="btn ghost" id="modeTapBtn" type="button">🎯 מצב סינון מלכודות (14 כרטיסים)</button>
+        <button class="btn ghost" id="recallResetBtn" type="button">נקה לוח 🔄</button>
+      </div>
+
+      <!-- Mode A: Typing -->
+      <div id="recallTypeArea">
+        <div class="recall-input-row">
+          <input class="text-input" id="recallInput" type="text" placeholder="הקלידי שם של עיקרון ולחצי Enter..." autocomplete="off" />
+          <button class="btn" id="recallSubmitBtn" type="button">בדוק</button>
+        </div>
+        <div class="slots-grid" id="recallSlots"></div>
+      </div>
+
+      <!-- Mode B: Tap 8 out of 14 -->
+      <div id="recallTapArea" style="display:none;">
+        <p style="font-weight:700;margin-top:0;">בחרי רק את <strong>8 העקרונות הדמוקרטיים</strong> של ערן (זהירות ממלכודות כמו "זכויות האדם" או "שוויון בפני החוק"!):</p>
+        <div class="trap-cards" id="trapCardsGrid"></div>
+      </div>
+
+      <div class="feedback-box" id="recallFeedback"></div>
+
+      <!-- Mini Ari Puzzle -->
+      <div style="margin-top:22px;padding-top:16px;border-top:2px dashed var(--border);">
+        <h3 style="margin:0 0 10px;">🇮🇱 בונוס מהלוח של ערן: שיטת הבחירות אר"י</h3>
+        <div class="options-grid" id="ariGrid"></div>
+      </div>
+    </section>
+
+    <!-- Panel 4: Answer Builder -->
+    <section class="panel" id="panel-builder">
+      <div class="panel-head">
+        <h2>✍️ מאמן "ציין – הצג – הסבר" (נוסחת ה-100 של ערן)</h2>
+        <span class="badge" id="builderCounter">תרגיל 1 מתוך 5</span>
+      </div>
+
+      <div class="story-box" id="builderStory"></div>
+
+      <div class="step-card">
+        <h3>1️⃣ ציין (כתבי/בחרי את שם העיקרון המדויק):</h3>
+        <div class="options-grid" id="builderStep1"></div>
+      </div>
+
+      <div class="step-card">
+        <h3>2️⃣ הצג (הגדרה עיונית בלי להזכיר את הסיפור!):</h3>
+        <div class="options-grid" id="builderStep2"></div>
+      </div>
+
+      <div class="step-card">
+        <h3>3️⃣ הסבר (קישור ציטוט מהסיפור להגדרה):</h3>
+        <div class="options-grid" id="builderStep3"></div>
+      </div>
+
+      <div class="btn-row">
+        <button class="btn" id="builderCheckBtn" type="button">בדוק תשובה מלאה ✅</button>
+        <button class="btn secondary" id="builderNextBtn" type="button">לתרגיל הבא ⬅️</button>
+      </div>
+
+      <div class="rubric-box" id="builderRubric"></div>
+    </section>
+
+    <!-- Panel 5: Full Cheat Sheet Summary -->
+    <section class="panel" id="panel-summary">
+      <div class="panel-head">
+        <h2>📖 השליף המלא לבוחן — כל 8 העקרונות והחוקים</h2>
+        <span class="badge green">מבוסס על הלוח של ערן + ספר "זוכים באזרחות"</span>
+      </div>
+      <div id="summaryContent" style="display:grid;gap:12px;"></div>
+    </section>
+  </div>
+
+  <!-- Cheat Sheet Modal -->
+  <dialog class="cheat-modal" id="cheatModal">
+    <div class="modal-inner">
+      <div class="modal-head">
+        <h3 id="modalTitle"></h3>
+        <button class="close-x" id="modalCloseBtn" type="button" aria-label="סגירה">✕</button>
+      </div>
+      <span class="modal-tag" id="modalTag"></span>
+      <p id="modalDesc" style="margin:6px 0;font-weight:600;"></p>
+      <ul class="modal-list" id="modalPoints"></ul>
+      <div class="trap-alert" id="modalTrap"></div>
+    </div>
+  </dialog>
+
+  <script>
+    // ========= 1. DATA: 8 PRINCIPLES (ERAN'S EXACT LIST) =========
+    const PRINCIPLES = [
+      {
+        id: "sovereignty",
+        name: "שלטון העם",
+        emoji: "🗳️",
+        tag: "עמ' 137 • שלב 1: מי בעל הבית?",
+        desc: "העם (כלל אזרחי המדינה) הוא הריבון והמקור הבלעדי לסמכות השלטון. במדינה מודרנית מתממש כדמוקרטיה עקיפה (ייצוגית) באמצעות בחירות דמוקרטיות.",
+        points: [
+          "למה ייצוגית ולא ישירה? גודל האוכלוסייה, מורכבות הבעיות, צורך בהחלטות מהירות.",
+          "משאל עם: כלי של דמוקרטיה ישירה המשולב בדמוקרטיה ייצוגית.",
+          "5 מאפייני בחירות דמוקרטיות: כלליות, חשאיות, שוויוניות, מחזוריות, חופשיות/מתחרות.",
+          "שיטת הבחירות בישראל (אר\"י): ארצית (כל הארץ אזור אחד), רשימתית (פתק רשימה סגורה), יחסית (מנדטים לפי אחוז קולות, אחוז חסימה 3.25%)."
+        ],
+        trap: "מלכודת: לא להתבלבל עם הכרעת הרוב! כששואלים על מי בוחר/ריבונות/משאל עם/אר\"י — זה שלטון העם."
+      },
+      {
+        id: "majority",
+        name: "הכרעת הרוב",
+        emoji: "⚖️",
+        tag: "עמ' 138–139 • שלב 1: איך מחליטים?",
+        desc: "מנגנון קבלת החלטות שבו עמדת הרוב מחייבת את כלל האזרחים (כולל המיעוט), מתוך הבנה שבחברה פלורליסטית לא ניתן להגיע להסכמה של 100%.",
+        points: [
+          "תנאי הכרחי (איסור עריצות הרוב): אסור לפגוע בזכויות האדם והמיעוט, ואסור לשלול מהמיעוט את הסיכוי להפוך לרוב בבחירות הבאות.",
+          "רוב רגיל: רוב מתוך המשתתפים בהצבעה באותו רגע.",
+          "רוב מוחלט: מעל 50% מכלל בעלי זכות ההצבעה (בכנסת: 61+ מתוך 120).",
+          "רוב מיוחס: אחוז גבוה במיוחד שנקבע מראש (למשל 80 ח\"כים)."
+        ],
+        trap: "מלכודת: אם רוב של 80% מעביר חוק שאוסר על המיעוט להתמודד בבחירות — זו לא דמוקרטיה אלא 'עריצות הרוב'!"
+      },
+      {
+        id: "limitation",
+        name: "הגבלת השלטון",
+        emoji: "🚧",
+        tag: "עמ' 211–212 • שלב 2: ריסון הכוח",
+        desc: "הצבת גבולות ומנגנוני פיקוח על השלטון כדי למנוע ריכוז כוח, עריצות ופגיעה בזכויות (בגלל שלשלטון יש תקציב, מידע ומשטרה/צבא).",
+        points: [
+          "פיקוח פורמלי (מוסדי, מכוח החוק): בג\"ץ, בחירות דמוקרטיות, כנסת ואופוזיציה, מבקר המדינה, חוקה/חוקי יסוד.",
+          "פיקוח לא-פורמלי (חוץ-מוסדי, יוזמה אזרחית): הפגנות ומחאה, תקשורת חופשית ('כלב השמירה'), עמותות, סאטירה ורשתות חברתיות."
+        ],
+        trap: "מלכודת: תקשורת חופשית והפגנה הן מנגנונים לא-פורמליים (לא מוסד של המדינה); מבקר המדינה ובג\"ץ הם פורמליים!"
+      },
+      {
+        id: "separation",
+        name: "הפרדת רשויות",
+        emoji: "🏛️",
+        tag: "שלב 2: עיצורים ואיזונים",
+        desc: "פיצול הכוח השלטוני לשלוש רשויות נפרדות (מחוקקת – כנסת, מבצעת – ממשלה, שופטת – בתי משפט) כדי למנוע ריכוז כוח דיקטטורי.",
+        points: [
+          "ההפרדה אינה מוחלטת! קיימת שיטת 'עיצורים ואיזונים' (ריסון ובלימה הדדיים).",
+          "למשל: הכנסת מחוקקת חוק -> בג\"ץ יכול לפסול חוק שסותר חוק יסוד -> הכנסת יכולה לתקן את החוק."
+        ],
+        trap: "מלכודת: אם השאלה מדגישה שתי רשויות שלטון שבולמות זו את זו (ממשלה וכנסת / כנסת ובג\"ץ) — 'הפרדת רשויות' הוא הדיוק המושלם!"
+      },
+      {
+        id: "ruleoflaw",
+        name: "שלטון החוק",
+        emoji: "📜",
+        tag: "שלב 3: כולם שווים בפני החוק",
+        desc: "כולם כפופים לחוק ושווים בפניו — האזרחים והשלטון כאחד. לאזרח מותר הכל חוץ ממה שנאסר בחוק; לשלטון אסור הכל חוץ ממה שהותר בחוק.",
+        points: [
+          "המובן הפורמלי: חקיקה תקינה ב-3 קריאות, פרסום ברור, ציות ואכיפה שוויונית.",
+          "המובן המהותי: תוכן החוק ראוי, מוסרי ומגן על זכויות אדם ומיעוט.",
+          "3 סוגי עבריינות: פלילית רגילה (רווח אישי), אידיאולוגית/מצפונית (השקפת עולם – נענשת רגיל), שלטונית (ניצול משרה שלטונית – החמורה ביותר, גם בלי לקחת כסף לכיס!).",
+          "גבול הציות: פקודה בלתי חוקית (חובה לציית ואז לקבול) מול פקודה בלתי חוקית בעליל ('דגל שחור' – חובה לסרב!)."
+        ],
+        trap: "מלכודת: שר/ראש עיר שעובר על החוק 'רק כדי לעזור לתושבים ולא לקח שקל לכיס' = עדיין עבריינות שלטונית!"
+      },
+      {
+        id: "pluralism",
+        name: "פלורליזם",
+        emoji: "🌈",
+        tag: "עמ' 138 • שלב 4: פס\"ה",
+        desc: "הלוח של ערן: 'ריבוי דעות. חובת השלטון.' הכרה בקיום דעות, קבוצות ואמונות שונות כערך חיובי, ומתן אפשרות אמיתית לבטא אותן.",
+        points: [
+          "ביטויי הפלורליזם: פוליטי (ריבוי מפלגות), תרבותי/חינוכי (זרמי חינוך), תקשורתי (ערוצים מגוונים), כלכלי-חברתי (ועדי עובדים ומעסיקים), שלטוני (ביזור כוח)."
+        ],
+        trap: "מילת מפתח לזיהוי: ריבוי וכמות! מתן מקום ותקצוב לקבוצות/דעות מגוונות."
+      },
+      {
+        id: "tolerance",
+        name: "סובלנות",
+        emoji: "🕊️",
+        tag: "עמ' 138 • שלב 4: פס\"ה",
+        desc: "הלוח של ערן: 'הכרה ברגשות האחרים תוך הימנעות מאלימות. ועל השלטון להימנע מלפגוע נגד דעות שמרגיזות אותו.'",
+        points: [
+          "מישור בין אזרחים: איפוק וכבוד כלפי דעה מקוממת/שונה בלי אלימות מילולית או פיזית.",
+          "מישור מצד השלטון (איפוק שלטוני): איסור על הממשלה לפגוע במפגינים או במבקרים שמרגיזים אותה."
+        ],
+        trap: "מלכודת: כשראש עיר או שר מתאפקים מול הפגנה מעליבה נגדם (או פוגעים במבקרים שלהם) — זו סובלנות (איפוק השלטון), לא פלורליזם!"
+      },
+      {
+        id: "consensus",
+        name: "הסכמיות",
+        emoji: "🤝",
+        tag: "עמ' 139 • שלב 4: פס\"ה",
+        desc: "הלוח של ערן: 'שמירה על כללי המשחק הדמוקרטיים.' הסכמה רחבה על עצם קיומה של המדינה, על אופייה ועל כללי המשחק (ציות לחוק, קבלת תוצאות הבחירות, הימנעות מאלימות).",
+        points: [
+          "ההסכמיות היא ה'דבק' שמונע מחברה פלורליסטית ומפוצלת להתפרק.",
+          "דוגמה קלאסית: מפלגה שהפסידה בבחירות מברכת את המנצחת ומקבלת את הכרעת הבוחר."
+        ],
+        trap: "מלכודת: מותר להפגין באופן חוקי גם אחרי הפסד בבחירות! הסכמיות אוסרת על אלימות ועל אי-קבלת תוצאות הבחירות/החוק."
+      }
+    ];
+
+    // ========= 2. GAME 1: CASE DETECTIVE QUESTIONS =========
+    const DETECTIVE_QUESTIONS = [
+      {
+        principleId: "ruleoflaw",
+        story: "שוטר עוצר את רכבו של שר האוצר על נסיעה במהירות מופרזת ורושם לו דו\"ח בדיוק כמו לכל אזרח אחר.",
+        prompt: "איזה עיקרון דמוקרטי בא לידי ביטוי?",
+        options: ["שלטון החוק (אכיפה שוויונית)", "הפרדת רשויות", "הגבלת השלטון", "הסכמיות"],
+        correctIndex: 0,
+        explain: "שלטון החוק במובן הפורמלי קובע שכולם שווים בפני החוק ונאכפים באופן שווה, כולל שרים."
+      },
+      {
+        principleId: "majority",
+        story: "מפלגת השלטון, שיש לה רוב של 70 ח\"כים, העבירה חוק שאוסר על מפלגות האופוזיציה לפרסם מודעות ולהתמודד בבחירות הבאות.",
+        prompt: "איזה עיקרון נפגע כאן?",
+        options: ["הכרעת הרוב (איסור עריצות הרוב)", "פלורליזם", "הפרדת רשויות", "שלטון העם"],
+        correctIndex: 0,
+        explain: "זו 'עריצות הרוב'! הכרעת הרוב אינה דמוקרטית אם היא פוגעת בזכויות המיעוט או שוללת ממנו סיכוי להפוך לרוב בבחירות הבאות."
+      },
+      {
+        principleId: "limitation",
+        story: "עיתונאית חשפה בתחקיר טלוויזיוני בזבוז כספים של שר, ובעקבות זאת אלפי אזרחים יצאו להפגין מול משרדו עד שביטל את התוכנית.",
+        prompt: "איזה עיקרון ומנגנון באים לידי ביטוי?",
+        options: ["הגבלת השלטון – מנגנון פיקוח לא-פורמלי", "הגבלת השלטון – מנגנון פיקוח פורמלי", "הסכמיות", "הפרדת רשויות"],
+        correctIndex: 0,
+        explain: "תקשורת חופשית ומחאה ציבורית הם גופים חוץ-מוסדיים שפועלים מיוזמתם = מנגנון פיקוח לא-פורמלי של הגבלת השלטון."
+      },
+      {
+        principleId: "limitation",
+        story: "מבקר המדינה פרסם דו\"ח חריף על אי-סדרים במשרד ממשלתי, ובמקביל חברי כנסת מהאופוזיציה הגישו הצעת אי-אמון.",
+        prompt: "איזה עיקרון ומנגנון באים לידי ביטוי?",
+        options: ["הגבלת השלטון – מנגנון פיקוח פורמלי", "הגבלת השלטון – מנגנון פיקוח לא-פורמלי", "שלטון העם", "סובלנות"],
+        correctIndex: 0,
+        explain: "מבקר המדינה והכנסת/האופוזיציה הם מוסדות רשמיים מכוח החוק = מנגנון פיקוח פורמלי."
+      },
+      {
+        principleId: "separation",
+        story: "הכנסת חוקקה חוק חדש, אך בג\"ץ פסל אותו מפני שסתר חוק יסוד. בתגובה, הכנסת תיקנה את החוק והעבירה אותו מחדש.",
+        prompt: "איזה עיקרון ואיזה מנגנון מתוכו מודגמים כאן?",
+        options: ["הפרדת רשויות – עיצורים ואיזונים", "הגבלת השלטון – מנגנון לא-פורמלי", "הסכמיות", "פלורליזם שלטוני"],
+        correctIndex: 0,
+        explain: "שתי רשויות (מחוקקת ושופטת) מרסנות ובולמות זו את זו — זו שיטת 'עיצורים ואיזונים' בהפרדת הרשויות."
+      },
+      {
+        principleId: "sovereignty",
+        story: "הממשלה מתלבטת אם לחתום על הסכם מדיני גורלי, ומחליטה לפנות לכל אזרחי המדינה שיצביעו 'בעד' או 'נגד' בקלפי.",
+        prompt: "איזה עיקרון וכלי באים לידי ביטוי?",
+        options: ["שלטון העם – משאל עם (דמוקרטיה ישירה)", "הכרעת הרוב – רוב מיוחס", "הסכמיות", "הפרדת רשויות"],
+        correctIndex: 0,
+        explain: "פנייה ישירה לאזרחים להכריע בשאלה גורלית היא משאל עם — כלי של דמוקרטיה ישירה המבטא את שלטון העם."
+      },
+      {
+        principleId: "sovereignty",
+        story: "בבחירות לכנסת קיבלה מפלגה חדשה 2.5% מהקולות הכשרים, ולכן לא קיבלה אף מנדט ולא נכנסה לכנסת.",
+        prompt: "איזה מרכיב בשיטת הבחירות בישראל (אר\"י) מסביר זאת?",
+        options: ["י' – יחסית (אחוז חסימה 3.25%)", "ר' – רשימתית", "א' – ארצית", "רוב מיוחס"],
+        correctIndex: 0,
+        explain: "בישראל הבחירות הן יחסיות, אך מפלגה חייבת לעבור את אחוז החסימה (3.25%) כדי לקבל מנדטים."
+      },
+      {
+        principleId: "pluralism",
+        story: "העירייה בעיר מעורבת הקימה ותקצבה מרכזי תרבות ושלטי רחוב בכמה שפות, כדי שכל קבוצה תוכל לשמור על מורשתה.",
+        prompt: "איזה עיקרון בא לידי ביטוי?",
+        options: ["פלורליזם", "סובלנות", "הסכמיות", "שלטון החוק"],
+        correctIndex: 0,
+        explain: "מתן מקום ותקצוב למגוון קבוצות, שפות ותרבויות בחברה = פלורליזם (ריבוי)."
+      },
+      {
+        principleId: "tolerance",
+        story: "ראש עיר ספג ביקורת מעליבה וחריפה מתושבים על תפקודו. למרות שכעס מאוד, הוא אישר להם להפגין מול העירייה ולא העניש אותם.",
+        prompt: "איזה עיקרון בא לידי ביטוי במעשה ראש העיר?",
+        options: ["סובלנות (איפוק השלטון)", "פלורליזם פוליטי", "הסכמיות", "שלטון העם"],
+        correctIndex: 0,
+        explain: "השלטון מתאפק ונמנע מלפגוע במבקרים שמשמיעים דעה שמרגיזה אותו = עיקרון הסובלנות (מישור השלטון)."
+      },
+      {
+        principleId: "tolerance",
+        story: "בעקבות תחקיר ביקורתי ומעליב נגד השר, הורה השר לסגור את ערוץ התקשורת ולהטיל קנסות על הכתבים.",
+        prompt: "איזה עיקרון מתוך שלישיית פס\"ה נפגע כאן במיוחד?",
+        options: ["סובלנות (איפוק השלטון)", "הסכמיות", "פלורליזם שלטוני", "הכרעת הרוב"],
+        correctIndex: 0,
+        explain: "השר פגע במי שהשמיע נגדו דעה מרגיזה — פגיעה ישירה בעיקרון הסובלנות (וגם בהגבלת השלטון – פגיעה בתקשורת)."
+      },
+      {
+        principleId: "consensus",
+        story: "אחרי מערכת בחירות סוערת, ראש המפלגה שהפסידה התקשר לברך את המנצח והודיע לתומכיו: 'נקבל את הכרעת הבוחר ונפעל לפי החוק'.",
+        prompt: "איזה עיקרון בא לידי ביטוי?",
+        options: ["הסכמיות", "סובלנות", "פלורליזם", "הפרדת רשויות"],
+        correctIndex: 0,
+        explain: "קבלת תוצאות הבחירות, ציות לחוק ושמירה על כללי המשחק הדמוקרטיים = הסכמיות."
+      },
+      {
+        principleId: "ruleoflaw",
+        story: "ראש עיר העסיק בעירייה מקורבים ממפלגתו ללא מכרז בניגוד לחוק, בטענה ש'רצה לקדם פרויקטים לעיר ולא לקח שקל לכיס'.",
+        prompt: "איזה מושג מתוך שלטון החוק מתאר את המעשה?",
+        options: ["עבריינות שלטונית", "עבריינות אידיאולוגית", "עבריינות פלילית רגילה", "פקודה בלתי חוקית"],
+        correctIndex: 0,
+        explain: "איש ציבור שמנצל את תפקידו ועובר על החוק הוא עבריין שלטוני — גם אם לא לקח כסף לכיס הפרטי!"
+      },
+      {
+        principleId: "ruleoflaw",
+        story: "הכנסת העבירה ב-3 קריאות ופרסמה ברבים חוק האוסר על קבוצה אתנית מסוימת לרכוש דירות במדינה.",
+        prompt: "איזה מובן של שלטון החוק נפגע?",
+        options: ["המובן המהותי", "המובן הפורמלי", "שני המובנים יחד", "אף מובן לא נפגע"],
+        correctIndex: 0,
+        explain: "החוק נחקק בהליך תקין (המובן הפורמלי התקיים), אך תוכנו פוגע בזכויות מיעוט ולכן המובן המהותי נפגע."
+      },
+      {
+        principleId: "ruleoflaw",
+        story: "מפקד בצבא הורה לחייליו לירות באזרחים לא חמושים שנכנעו והרימו ידיים.",
+        prompt: "מהי הפקודה ומה חובת החיילים?",
+        options: ["פקודה בלתי חוקית בעליל – חובה לסרב", "פקודה בלתי חוקית רגילה – לציית ואז לקבול", "עבריינות אידיאולוגית", "הגבלת השלטון"],
+        correctIndex: 0,
+        explain: "ירי בחפים מפשע הוא 'דגל שחור' (פרשת כפר קאסם) — פקודה בלתי חוקית בעליל שחובה חוקית ומוסרית לסרב לה."
+      },
+      {
+        principleId: "majority",
+        story: "בהצבעה בכנסת נכחו רק 30 חברי כנסת. 20 הצביעו בעד ו-10 נגד, והצעת החוק עברה.",
+        prompt: "איזה סוג רוב היה בהצבעה?",
+        options: ["רוב רגיל", "רוב מוחלט", "רוב מיוחס", "עריצות הרוב"],
+        correctIndex: 0,
+        explain: "רוב מתוך המשתתפים בהצבעה באותו רגע (20 מתוך 30) = רוב רגיל. רוב מוחלט בכנסת הוא 61+ מתוך 120."
+      },
+      {
+        principleId: "majority",
+        story: "חוק יסוד קובע שכדי לשנות סעיף מסוים נדרשת תמיכה של לפחות 80 חברי כנסת.",
+        prompt: "איזה סוג רוב נדרש כאן?",
+        options: ["רוב מיוחס", "רוב מוחלט", "רוב רגיל", "רוב יחסי"],
+        correctIndex: 0,
+        explain: "אחוז גבוה במיוחד שנקבע מראש בחוק (כמו 80 מתוך 120 ח\"כים) = רוב מיוחס."
+      },
+      {
+        principleId: "sovereignty",
+        story: "במדינה מסוימת הממשלה חייבה בוחרים לצלם את הפתק שלהם בקלפי ולהראות לבוס בעבודה למי הצביעו.",
+        prompt: "איזה מאפיין אוניברסלי של בחירות דמוקרטיות נפגע כאן?",
+        options: ["חשאיות (בחירות חשאיות)", "מחזוריות", "ארצית", "רשימתית"],
+        correctIndex: 0,
+        explain: "בחירות דמוקרטיות חייבות להיות חשאיות (כלליות, חשאיות, שוויוניות, מחזוריות, חופשיות/מתחרות) כדי שאף אחד לא יאיים על הבוחר."
+      },
+      {
+        principleId: "ruleoflaw",
+        story: "שר החליט להקים יחידת פיקוח חדשה במשרדו אף שאין שום חוק שמסמיך אותו לעשות זאת, בטענה ש'אף חוק לא אוסר עליי'.",
+        prompt: "למה טענת השר שגויה לפי עיקרון שלטון החוק?",
+        options: ["לשלטון אסור לעשות דבר פרט למה שהותר לו במפורש בחוק", "רק לאזרח אסור לעשות מה שלא הותר לו", "לשר מותר הכל אם יש לו רוב", "זו פקודה בלתי חוקית בעליל"],
+        correctIndex: 0,
+        explain: "הבדל קריטי: לאזרח מותר הכל פרט למה שנאסר בחוק; לרשויות השלטון אסור הכל פרט למה שהותר להן במפורש בחוק!"
+      },
+      {
+        principleId: "pluralism",
+        story: "במשק הישראלי פועלים ארגוני עובדים (כמו ההסתדרות) מול ארגוני מעסיקים, שניהם משפיעים על תנאי העבודה.",
+        prompt: "איזה ביטוי של פלורליזם מתואר כאן?",
+        options: ["פלורליזם כלכלי-חברתי", "פלורליזם פוליטי", "פלורליזם שלטוני", "פלורליזם תקשורתי"],
+        correctIndex: 0,
+        explain: "ארגוני עובדים מול ארגוני מעסיקים הם ביטוי לפלורליזם כלכלי-חברתי."
+      },
+      {
+        principleId: "tolerance",
+        story: "בפאנל באוניברסיטה הציג מרצה דעה פוליטית מקוממת, והסטודנטים המתנגדים הקשיבו לו בשקט והתווכחו איתו בכבוד ללא צעקות או אלימות.",
+        prompt: "איזה עיקרון ובאיזה מישור באו לידי ביטוי?",
+        options: ["סובלנות – במישור שבין אזרחים", "סובלנות – איפוק השלטון", "הסכמיות", "הפרדת רשויות"],
+        correctIndex: 0,
+        explain: "אזרחים שנוהגים בכבוד, איפוק והימנעות מאלימות מול דעה מרגיזה = עיקרון הסובלנות במישור שבין אזרחים."
+      }
+    ];
+
+    // ========= 3. GAME 2: SPEED SORT DECKS =========
+    const SORT_DECKS = {
+      formal: {
+        buckets: ["מנגנון פורמלי (מוסדי)", "מנגנון לא-פורמלי (חוץ-מוסדי)"],
+        items: [
+          { text: "בג\"ץ פוסל החלטת ממשלה", answer: 0, principleId: "limitation" },
+          { text: "עיתונאי חושף שחיתות בתחקיר", answer: 1, principleId: "limitation" },
+          { text: "מבקר המדינה בודק משרד ממשלתי", answer: 0, principleId: "limitation" },
+          { text: "הפגנה של אלפי אזרחים בכיכר", answer: 1, principleId: "limitation" },
+          { text: "תוכנית סאטירה לועגת לממשלה", answer: 1, principleId: "limitation" },
+          { text: "ח\"כ מהאופוזיציה מגיש שאילתה לשר", answer: 0, principleId: "limitation" },
+          { text: "עמותת זכויות אדם מפרסמת דו\"ח", answer: 1, principleId: "limitation" },
+          { text: "בחירות דמוקרטיות כל 4 שנים", answer: 0, principleId: "limitation" }
+        ]
+      },
+      crime: {
+        buckets: ["פלילית רגילה", "אידיאולוגית / מצפונית", "עבריינות שלטונית"],
+        items: [
+          { text: "פריצה לחנות כדי לגנוב כסף", answer: 0, principleId: "ruleoflaw" },
+          { text: "חסימת כביש בלתי חוקית למען איכות הסביבה", answer: 1, principleId: "ruleoflaw" },
+          { text: "ראש עיר ממנה מקורבים ללא מכרז", answer: 2, principleId: "ruleoflaw" },
+          { text: "קצין משטרה מוחק דו\"ח תנועה לגיסו", answer: 2, principleId: "ruleoflaw" },
+          { text: "העלמת מס כדי להרוויח יותר כסף", answer: 0, principleId: "ruleoflaw" },
+          { text: "סירוב פקודה פוליטי מתוך השקפת עולם", answer: 1, principleId: "ruleoflaw" },
+          { text: "שר מעביר תקציב אסור כדי לעזור למפלגתו", answer: 2, principleId: "ruleoflaw" }
+        ]
+      },
+      orders: {
+        buckets: ["בלתי חוקית רגילה (לציית ואז לקבול)", "בלתי חוקית בעליל (חובה לסרב!)"],
+        items: [
+          { text: "פקודה לקצר שעות שינה בניגוד לנהלים", answer: 0, principleId: "ruleoflaw" },
+          { text: "פקודה לירות באזרחים חפים מפשע שנכנעו", answer: 1, principleId: "ruleoflaw" },
+          { text: "פקודה לבצע תורנות מטבח ללא הפסקה כחוק", answer: 0, principleId: "ruleoflaw" },
+          { text: "פקודה להוציא להורג שבויי מלחמה", answer: 1, principleId: "ruleoflaw" },
+          { text: "פקודה לנסוע ברכב צבאי בלי טופס תקין", answer: 0, principleId: "ruleoflaw" },
+          { text: "פקודה שמתנוסס מעליה 'דגל שחור' מוסרי", answer: 1, principleId: "ruleoflaw" }
+        ]
+      },
+      pse: {
+        buckets: ["פלורליזם", "סובלנות", "הסכמיות"],
+        items: [
+          { text: "ריבוי מפלגות וערוצי תקשורת במדינה", answer: 0, principleId: "pluralism" },
+          { text: "ראש עיר מאשר הפגנה מעליבה נגדו", answer: 1, principleId: "tolerance" },
+          { text: "מפלגה שהפסידה מברכת את המנצחת", answer: 2, principleId: "consensus" },
+          { text: "תקצוב זרמי חינוך שונים (חילוני, דתי, ערבי)", answer: 0, principleId: "pluralism" },
+          { text: "ויכוח סוער בין אזרחים ללא אלימות", answer: 1, principleId: "tolerance" },
+          { text: "הסכמה רחבה על ציות לחוק וכללי המשחק", answer: 2, principleId: "consensus" }
+        ]
+      },
+      majority: {
+        buckets: ["רוב רגיל", "רוב מוחלט (61+)", "רוב מיוחס"],
+        items: [
+          { text: "20 בעד מול 10 נגד מתוך 30 שנכחו באולם", answer: 0, principleId: "majority" },
+          { text: "63 ח\"כים בעד מתוך 120 ח\"כים", answer: 1, principleId: "majority" },
+          { text: "דרישה של 80 ח\"כים לשינוי חוק יסוד", answer: 2, principleId: "majority" },
+          { text: "מעל 50% מכלל בעלי זכות ההצבעה", answer: 1, principleId: "majority" },
+          { text: "רוב מתוך המשתתפים בהצבעה באותו רגע", answer: 0, principleId: "majority" },
+          { text: "אחוז גבוה במיוחד שנקבע מראש (כמו 75%)", answer: 2, principleId: "majority" }
+        ]
+      }
+    };
+
+    // ========= 4. GAME 4: ANSWER BUILDER EXERCISES =========
+    const BUILDER_EXERCISES = [
+      {
+        story: "בעקבות תלונות רבות, הגישו עמותות חברתיות עתירה לבג\"ץ ויצאו להפגנות מול הכנסת עד שההחלטה בוטלה.",
+        step1: {
+          q: "מה שם העיקרון המדויק (ציין)?",
+          opts: [
+            "עיקרון הגבלת השלטון (מנגנונים פורמלי ולא-פורמלי)",
+            "עיקרון הפרדת הרשויות",
+            "עיקרון שלטון העם",
+            "עיקרון הסובלנות"
+          ],
+          correct: 0
+        },
+        step2: {
+          q: "איזה 'הצג' כתוב נכון לפי המחוון של ערן?",
+          opts: [
+            "עיקרון הקובע שיש להציב גבולות ומנגנוני פיקוח על השלטון (פורמליים כמו בג\"ץ ולא-פורמליים כמו הפגנות ועמותות) כדי למנוע עריצות וריכוז כוח.",
+            "עיקרון שאומר שאסור לכנסת לקבל החלטות שעמותות לא אוהבות, ולכן העמותות הפגינו נגדה.",
+            "עיקרון שפירושו שכולם שווים בפני החוק.",
+            "עיקרון שאומר שיש ריבוי דעות במדינה."
+          ],
+          correct: 0
+        },
+        step3: {
+          q: "איזה 'הסבר' מחבר נכון את הקטע להגדרה?",
+          opts: [
+            "בקטע נכתב כי 'עמותות הגישו עתירה לבג\"ץ ויצאו להפגנות' — בג\"ץ הוא מנגנון פורמלי והפגנות הן מנגנון לא-פורמלי שריסנו וביטלו את החלטת השלטון.",
+            "בקטע כתוב שהעמותות כעסו ולכן המדינה דמוקרטית.",
+            "בקטע כתוב שהשלטון חזק ולכן הוא צודק.",
+            "בקטע יש הפגנה ולכן זה שלטון העם."
+          ],
+          correct: 0
+        },
+        rubric: "נוסחת 100%: (1) ציין: עיקרון הגבלת השלטון. (2) הצג: הגדרה כללית של מניעת עריצות ע\"י פיקוח פורמלי ולא-פורמלי בלי להזכיר את הסיפור! (3) הסבר: ציטוט קצר מהקטע + קישור לבג\"ץ (פורמלי) ולהפגנות/עמותות (לא-פורמלי)."
+      },
+      {
+        story: "ראש הממשלה הורה למחוק דו\"חות חניה של פעילי מפלגתו כדי לחזק את התמיכה בו לפני הבחירות, אף שלא לקח כסף לעצמו.",
+        step1: {
+          q: "מה נציין במדויק?",
+          opts: [
+            "פגיעה בעקרון שלטון החוק – עבריינות שלטונית",
+            "עבריינות אידיאולוגית",
+            "פגיעה בעיקרון הסובלנות",
+            "עבריינות פלילית רגילה"
+          ],
+          correct: 0
+        },
+        step2: {
+          q: "איזה 'הצג' הוא המדויק?",
+          opts: [
+            "שלטון החוק קובע שכולם כפופים לחוק ושווים בפניו. עבריינות שלטונית היא הפרת חוק ע\"י איש ציבור תוך ניצול סמכותו לטובתו או לטובת מפלגתו.",
+            "שלטון החוק אומר שראש הממשלה לא צריך לציית לדו\"חות חניה אם לא לקח כסף.",
+            "עבריינות שלטונית היא רק כששר גונב כסף לכיס הפרטי.",
+            "ראש הממשלה עזר לפעילי מפלגתו לפני הבחירות."
+          ],
+          correct: 0
+        },
+        step3: {
+          q: "איזה 'הסבר' הוא המדויק?",
+          opts: [
+            "בקטע נכתב כי ראש הממשלה 'הורה למחוק דו\"חות של פעילי מפלגתו' — הוא ניצל את משרתו השלטונית והפר את החוק לטובת מפלגתו, וזו עבריינות שלטונית.",
+            "בקטע נכתב שהיו בחירות ולכן זו דמוקרטיה ייצוגית.",
+            "הוא לא לקח כסף לעצמו ולכן זו עבריינות אידיאולוגית.",
+            "זה מבטא פלורליזם פוליטי."
+          ],
+          correct: 0
+        },
+        rubric: "נוסחת 100%: תמיד מזכירים את השם המדויק (שלטון החוק – עבריינות שלטונית), מגדירים בלי הסיפור, ומצטטים את ניצול הסמכות לטובת המפלגה."
+      },
+      {
+        story: "למרות ביקורת נוקבת ועלבונות קשים שהוטחו בשר החינוך בכינוס מורים, השר סירב להשתיק את המבקרים ואפשר להם לסיים את דבריהם.",
+        step1: {
+          q: "מה נציין במדויק?",
+          opts: [
+            "עיקרון הסובלנות (איפוק השלטון)",
+            "עיקרון ההסכמיות",
+            "עיקרון הפרדת הרשויות",
+            "עיקרון הכרעת הרוב"
+          ],
+          correct: 0
+        },
+        step2: {
+          q: "איזה 'הצג' מדויק לפי הלוח של ערן?",
+          opts: [
+            "נכונות של פרטים והשלטון לנהוג בכבוד ובאיפוק כלפי דעות מנוגדות ומרגיזות, ללא אלימות וללא הפעלת כוח שלטוני להשתקתן.",
+            "ריבוי מפלגות וערוצי תקשורת במדינה.",
+            "שר החינוך ספג עלבונות בכינוס מורים.",
+            "הסכמה רחבה על כללי המשחק הדמוקרטיים."
+          ],
+          correct: 0
+        },
+        step3: {
+          q: "איזה 'הסבר' מדויק?",
+          opts: [
+            "בקטע נכתב כי השר 'סירב להשתיק את המבקרים ואפשר להם לסיים' למרות העלבונות — השלטון גילה איפוק ולא פגע בדעות שהרגיזו אותו.",
+            "בקטע נכתב שהיו הרבה מורים ולכן זה פלורליזם.",
+            "בקטע נכתב שהיו בחירות ולכן זו הסכמיות.",
+            "בקטע השר לא עבר על החוק."
+          ],
+          correct: 0
+        },
+        rubric: "נוסחת 100%: זכרי להדגיש ב'הצג' את מישור השלטון ('ללא הפעלת כוח שלטוני להשתיק דעות מרגיזות')."
+      }
+    ];
+
+    // ========= 5. STATE & STORAGE =========
+    const STORAGE_KEY = "civics_play_8_v1";
+    let state = loadState();
+    let soundOn = true;
+    let audioCtx = null;
+
+    function defaultState() {
+      const mastery = {};
+      PRINCIPLES.forEach(p => mastery[p.id] = 0);
+      return { xp: 0, streak: 0, bestStreak: 0, mastery };
+    }
+
+    function loadState() {
+      try {
+        const raw = localStorage.getItem(STORAGE_KEY);
+        if (!raw) return defaultState();
+        const parsed = JSON.parse(raw);
+        const def = defaultState();
+        return {
+          xp: parsed.xp || 0,
+          streak: parsed.streak || 0,
+          bestStreak: parsed.bestStreak || 0,
+          mastery: { ...def.mastery, ...(parsed.mastery || {}) }
+        };
+      } catch {
+        return defaultState();
+      }
+    }
+
+    function saveState() {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+      renderStats();
+      renderMasteryGrid();
+    }
+
+    function playTone(good) {
+      if (!soundOn) return;
+      try {
+        if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        const osc = audioCtx.createOscillator();
+        const gain = audioCtx.createGain();
+        osc.type = good ? "triangle" : "sawtooth";
+        osc.frequency.setValueAtTime(good ? 520 : 210, audioCtx.currentTime);
+        if (good) osc.frequency.exponentialRampToValueAtTime(780, audioCtx.currentTime + 0.12);
+        gain.gain.setValueAtTime(0.08, audioCtx.currentTime);
+        gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.16);
+        osc.connect(gain);
+        gain.connect(audioCtx.destination);
+        osc.start();
+        osc.stop(audioCtx.currentTime + 0.17);
+      } catch {}
+    }
+
+    function awardPoint(principleId, baseXp = 10) {
+      state.streak += 1;
+      if (state.streak > state.bestStreak) state.bestStreak = state.streak;
+      const bonus = Math.min(state.streak * 2, 14);
+      state.xp += baseXp + bonus;
+      if (principleId && state.mastery[principleId] !== undefined) {
+        state.mastery[principleId] = Math.min(3, state.mastery[principleId] + 1);
+      }
+      playTone(true);
+      saveState();
+    }
+
+    function penalizeStreak() {
+      state.streak = 0;
+      playTone(false);
+      saveState();
+    }
+
+    function renderStats() {
+      document.getElementById("xpVal").textContent = state.xp;
+      document.getElementById("streakVal").textContent = state.streak;
+      document.getElementById("bestStreakVal").textContent = state.bestStreak;
+      const medals = Object.values(state.mastery).filter(v => v >= 3).length;
+      document.getElementById("medalsVal").textContent = medals;
+    }
+
+    function renderMasteryGrid() {
+      const grid = document.getElementById("masteryGrid");
+      grid.innerHTML = "";
+      PRINCIPLES.forEach(p => {
+        const lvl = state.mastery[p.id] || 0;
+        const btn = document.createElement("button");
+        btn.type = "button";
+        btn.className = "principle-chip" + (lvl >= 3 ? " mastered" : "");
+        btn.addEventListener("click", () => openCheatModal(p));
+
+        const top = document.createElement("div");
+        top.className = "chip-top";
+        const label = document.createElement("span");
+        label.textContent = `${p.emoji} ${p.name}`;
+        const medal = document.createElement("span");
+        medal.textContent = lvl >= 3 ? "🏅" : `${lvl}/3`;
+        top.append(label, medal);
+
+        const bar = document.createElement("div");
+        bar.className = "chip-bar";
+        const fill = document.createElement("div");
+        fill.className = "chip-fill";
+        fill.style.width = `${(lvl / 3) * 100}%`;
+        bar.appendChild(fill);
+
+        btn.append(top, bar);
+        grid.appendChild(btn);
+      });
+    }
+
+    // ========= 6. CHEAT MODAL =========
+    const modal = document.getElementById("cheatModal");
+    function openCheatModal(p) {
+      document.getElementById("modalTitle").textContent = `${p.emoji} ${p.name}`;
+      document.getElementById("modalTag").textContent = p.tag;
+      document.getElementById("modalDesc").textContent = p.desc;
+      const ul = document.getElementById("modalPoints");
+      ul.innerHTML = "";
+      p.points.forEach(pt => {
+        const li = document.createElement("li");
+        li.textContent = pt;
+        ul.appendChild(li);
+      });
+      document.getElementById("modalTrap").textContent = p.trap;
+      modal.showModal();
+    }
+    document.getElementById("modalCloseBtn").addEventListener("click", () => modal.close());
+    modal.addEventListener("click", e => { if (e.target === modal) modal.close(); });
+
+    // ========= 7. TABS & CONTROLS =========
+    document.querySelectorAll(".tab-btn").forEach(btn => {
+      btn.addEventListener("click", () => {
+        document.querySelectorAll(".tab-btn").forEach(b => b.classList.remove("active"));
+        document.querySelectorAll(".panel").forEach(p => p.classList.remove("active"));
+        btn.classList.add("active");
+        document.getElementById(`panel-${btn.dataset.tab}`).classList.add("active");
+      });
+    });
+
+    document.getElementById("soundToggle").addEventListener("click", e => {
+      soundOn = !soundOn;
+      e.target.textContent = soundOn ? "🔊 צליל" : "🔇 מושתק";
+    });
+
+    document.getElementById("resetBtn").addEventListener("click", () => {
+      if (confirm("לאפס את ה-XP והמדליות ולהתחיל מחדש?")) {
+        state = defaultState();
+        saveState();
+      }
+    });
+
+    // ========= 8. GAME 1 LOGIC: DETECTIVE =========
+    let detOrder = [...DETECTIVE_QUESTIONS];
+    let detIndex = 0;
+    let detAnswered = false;
+
+    function shuffleArray(arr) {
+      const copy = [...arr];
+      for (let i = copy.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [copy[i], copy[j]] = [copy[j], copy[i]];
+      }
+      return copy;
+    }
+
+    function renderDetective() {
+      detAnswered = false;
+      const q = detOrder[detIndex];
+      document.getElementById("detectiveCounter").textContent = `שאלה ${detIndex + 1} מתוך ${detOrder.length}`;
+      document.getElementById("detectiveStory").textContent = q.story;
+      document.getElementById("detectivePrompt").textContent = q.prompt;
+      const fb = document.getElementById("detectiveFeedback");
+      fb.className = "feedback-box";
+      fb.textContent = "";
+      document.getElementById("detectiveNextBtn").style.display = "none";
+
+      // Shuffle options while tracking correct text
+      const correctText = q.options[q.correctIndex];
+      const shuffledOpts = shuffleArray(q.options);
+      const grid = document.getElementById("detectiveOptions");
+      grid.innerHTML = "";
+
+      shuffledOpts.forEach(optText => {
+        const b = document.createElement("button");
+        b.type = "button";
+        b.className = "opt-btn";
+        b.textContent = optText;
+        b.addEventListener("click", () => {
+          if (detAnswered) return;
+          detAnswered = true;
+          const allBtns = grid.querySelectorAll(".opt-btn");
+          allBtns.forEach(x => x.disabled = true);
+          const isGood = optText === correctText;
+          if (isGood) {
+            b.classList.add("correct");
+            awardPoint(q.principleId, 12);
+            fb.className = "feedback-box show good";
+            fb.textContent = `✅ מדויק! ${q.explain}`;
+          } else {
+            b.classList.add("wrong");
+            allBtns.forEach(x => { if (x.textContent === correctText) x.classList.add("correct"); });
+            penalizeStreak();
+            fb.className = "feedback-box show bad";
+            fb.textContent = `❌ כמעט! התשובה הנכונה: ${correctText}. ${q.explain}`;
+          }
+          document.getElementById("detectiveNextBtn").style.display = "inline-block";
+        });
+        grid.appendChild(b);
+      });
+    }
+
+    document.getElementById("detectiveNextBtn").addEventListener("click", () => {
+      detIndex = (detIndex + 1) % detOrder.length;
+      renderDetective();
+    });
+
+    document.getElementById("detectiveShuffleBtn").addEventListener("click", () => {
+      detOrder = shuffleArray(DETECTIVE_QUESTIONS);
+      detIndex = 0;
+      renderDetective();
+    });
+
+    // ========= 9. GAME 2 LOGIC: SPEED SORT =========
+    let currentDeckKey = "formal";
+    let sortItems = [];
+    let sortIdx = 0;
+    let sortScore = 0;
+    let sortTimed = false;
+    let sortSeconds = 30;
+    let sortTimerId = null;
+
+    function startSortRound() {
+      clearInterval(sortTimerId);
+      const deck = SORT_DECKS[currentDeckKey];
+      sortItems = shuffleArray(deck.items);
+      sortIdx = 0;
+      sortScore = 0;
+      sortSeconds = 30;
+      document.getElementById("sortScoreBadge").textContent = "ניקוד בסיבוב: 0";
+      const fb = document.getElementById("sortFeedback");
+      fb.className = "feedback-box";
+
+      if (sortTimed) {
+        document.getElementById("sortTimerBadge").textContent = `⏱️ ${sortSeconds} שניות`;
+        sortTimerId = setInterval(() => {
+          sortSeconds -= 1;
+          document.getElementById("sortTimerBadge").textContent = `⏱️ ${sortSeconds} שניות`;
+          if (sortSeconds <= 0) {
+            clearInterval(sortTimerId);
+            document.getElementById("sortCardText").textContent = `⏰ נגמר הזמן! סיימת עם ${sortScore} נקודות!`;
+            document.getElementById("sortBuckets").innerHTML = "";
+          }
+        }, 1000);
+      } else {
+        document.getElementById("sortTimerBadge").textContent = "⏱️ מצב רגוע";
+      }
+      renderSortCard();
+    }
+
+    function renderSortCard() {
+      const deck = SORT_DECKS[currentDeckKey];
+      const cardEl = document.getElementById("sortCardText");
+      const bucketsEl = document.getElementById("sortBuckets");
+      if (sortIdx >= sortItems.length) {
+        clearInterval(sortTimerId);
+        cardEl.textContent = `🎉 כל הכבוד! סיימת את החפיסה עם ${sortScore} תשובות נכונות!`;
+        bucketsEl.innerHTML = "";
+        return;
+      }
+
+      const item = sortItems[sortIdx];
+      cardEl.textContent = item.text;
+      bucketsEl.innerHTML = "";
+      deck.buckets.forEach((bName, bIdx) => {
+        const b = document.createElement("button");
+        b.type = "button";
+        b.className = "bucket-btn";
+        b.textContent = bName;
+        b.addEventListener("click", () => {
+          const fb = document.getElementById("sortFeedback");
+          if (bIdx === item.answer) {
+            sortScore += 1;
+            document.getElementById("sortScoreBadge").textContent = `ניקוד בסיבוב: ${sortScore}`;
+            awardPoint(item.principleId, 8);
+            fb.className = "feedback-box show good";
+            fb.textContent = `✅ בול! "${item.text}" שייך ל: ${bName}`;
+          } else {
+            penalizeStreak();
+            fb.className = "feedback-box show bad";
+            fb.textContent = `❌ שים לב: "${item.text}" שייך ל: ${deck.buckets[item.answer]}`;
+          }
+          sortIdx += 1;
+          renderSortCard();
+        });
+        bucketsEl.appendChild(b);
+      });
+    }
+
+    document.querySelectorAll(".deck-pill").forEach(pill => {
+      pill.addEventListener("click", () => {
+        document.querySelectorAll(".deck-pill").forEach(p => p.classList.remove("active"));
+        pill.classList.add("active");
+        currentDeckKey = pill.dataset.deck;
+        startSortRound();
+      });
+    });
+
+    document.getElementById("sortTimerToggle").addEventListener("click", e => {
+      sortTimed = !sortTimed;
+      e.target.textContent = sortTimed ? "עבור למצב רגוע 🌿" : "הפעל אתגר 30 שניות ⏱️";
+      startSortRound();
+    });
+
+    document.getElementById("sortRestartBtn").addEventListener("click", startSortRound);
+
+    // ========= 10. GAME 3 LOGIC: RECALL =========
+    let foundIds = new Set();
+    const TRAP_POOL = [
+      { label: "שלטון העם", isReal: true, id: "sovereignty" },
+      { label: "הכרעת הרוב", isReal: true, id: "majority" },
+      { label: "הגבלת השלטון", isReal: true, id: "limitation" },
+      { label: "הפרדת רשויות", isReal: true, id: "separation" },
+      { label: "שלטון החוק", isReal: true, id: "ruleoflaw" },
+      { label: "פלורליזם", isReal: true, id: "pluralism" },
+      { label: "סובלנות", isReal: true, id: "tolerance" },
+      { label: "הסכמיות", isReal: true, id: "consensus" },
+      { label: "זכויות האדם", isReal: false },
+      { label: "שוויון בפני החוק", isReal: false },
+      { label: "בחירות מתחלפות", isReal: false },
+      { label: "חופש הביטוי", isReal: false },
+      { label: "עריצות הרוב", isReal: false },
+      { label: "דמוקרטיה ישירה", isReal: false }
+    ];
+
+    function normalizeHebrew(str) {
+      return str
+        .trim()
+        .replace(/["'׳״\-.,]/g, "")
+        .replace(/^עיק?רון\s+/, "")
+        .replace(/^ה/, "")
+        .replace(/\s+/g, " ");
+    }
+
+    const SYNONYMS = {
+      sovereignty: ["שלטון העם", "שלטון עם", "ריבונות העם", "ריבונות עם"],
+      majority: ["כרעת הרוב", "הכרעת הרוב", "כרעת רוב", "הכרעת רוב"],
+      limitation: ["גבלת השלטון", "הגבלת השלטון", "גבלת שלטון"],
+      separation: ["פרדת רשויות", "הפרדת רשויות", "פרדת הרשויות", "הפרדת הרשויות"],
+      ruleoflaw: ["שלטון החוק", "שלטון חוק"],
+      pluralism: ["פלורליזם"],
+      tolerance: ["סובלנות"],
+      consensus: ["סכמיות", "הסכמיות", "סכמתיות", "קונצנזוס"]
+    };
+
+    function renderRecallSlots() {
+      const slots = document.getElementById("recallSlots");
+      slots.innerHTML = "";
+      let idx = 1;
+      PRINCIPLES.forEach(p => {
+        const div = document.createElement("div");
+        const isFound = foundIds.has(p.id);
+        div.className = "recall-slot" + (isFound ? " found" : "");
+        div.textContent = isFound ? `✅ ${p.name}` : `#${idx}`;
+        slots.appendChild(div);
+        idx += 1;
+      });
+      document.getElementById("recallFoundBadge").textContent = `נמצאו: ${foundIds.size} / 8`;
+    }
+
+    function checkTypedPrinciple() {
+      const input = document.getElementById("recallInput");
+      const raw = input.value;
+      if (!raw.trim()) return;
+      const norm = normalizeHebrew(raw);
+      const fb = document.getElementById("recallFeedback");
+
+      let matched = null;
+      for (const [id, list] of Object.entries(SYNONYMS)) {
+        if (list.some(item => norm.includes(normalizeHebrew(item)))) {
+          matched = PRINCIPLES.find(p => p.id === id);
+          break;
+        }
+      }
+
+      if (matched) {
+        if (foundIds.has(matched.id)) {
+          fb.className = "feedback-box show good";
+          fb.textContent = `כבר מצאת את "${matched.name}"! נסי עוד אחד.`;
+        } else {
+          foundIds.add(matched.id);
+          awardPoint(matched.id, 10);
+          fb.className = "feedback-box show good";
+          fb.textContent = foundIds.size === 8
+            ? "🏆 אלופה! מצאת את כל 8 העקרונות מהראש!"
+            : `✅ יפה! מצאת את "${matched.name}" (${foundIds.size}/8)`;
+          renderRecallSlots();
+        }
+        input.value = "";
+      } else {
+        penalizeStreak();
+        fb.className = "feedback-box show bad";
+        fb.textContent = `❌ "${raw}" הוא לא אחד מ-8 הכותרות של ערן (אולי זה חלק מתוך עיקרון, כמו שוויון בפני החוק או זכויות האדם).`;
+      }
+    }
+
+    document.getElementById("recallSubmitBtn").addEventListener("click", checkTypedPrinciple);
+    document.getElementById("recallInput").addEventListener("keydown", e => {
+      if (e.key === "Enter") checkTypedPrinciple();
+    });
+
+    function renderTapCards() {
+      const grid = document.getElementById("trapCardsGrid");
+      grid.innerHTML = "";
+      shuffleArray(TRAP_POOL).forEach(card => {
+        const btn = document.createElement("button");
+        btn.type = "button";
+        btn.className = "trap-chip";
+        btn.textContent = card.label;
+        if (card.isReal && foundIds.has(card.id)) btn.classList.add("selected-good");
+        btn.addEventListener("click", () => {
+          const fb = document.getElementById("recallFeedback");
+          if (card.isReal) {
+            if (!foundIds.has(card.id)) {
+              foundIds.add(card.id);
+              awardPoint(card.id, 8);
+              btn.classList.add("selected-good");
+              renderRecallSlots();
+              fb.className = "feedback-box show good";
+              fb.textContent = foundIds.size === 8 ? "🏆 מצאת את כל ה-8 בלי ליפול במלכודות!" : `✅ נכון! ${card.label} (${foundIds.size}/8)`;
+            }
+          } else {
+            penalizeStreak();
+            btn.classList.add("selected-bad");
+            fb.className = "feedback-box show bad";
+            fb.textContent = `⚠️ מלכודת! "${card.label}" היא מושג חשוב, אבל לא אחת מ-8 הכותרות של ערן.`;
+          }
+        });
+        grid.appendChild(btn);
+      });
+    }
+
+    document.getElementById("modeTypeBtn").addEventListener("click", () => {
+      document.getElementById("recallTypeArea").style.display = "block";
+      document.getElementById("recallTapArea").style.display = "none";
+    });
+
+    document.getElementById("modeTapBtn").addEventListener("click", () => {
+      document.getElementById("recallTypeArea").style.display = "none";
+      document.getElementById("recallTapArea").style.display = "block";
+      renderTapCards();
+    });
+
+    document.getElementById("recallResetBtn").addEventListener("click", () => {
+      foundIds.clear();
+      renderRecallSlots();
+      renderTapCards();
+      document.getElementById("recallFeedback").className = "feedback-box";
+    });
+
+    // Mini ARI Quiz
+    function renderAri() {
+      const ariQuestions = [
+        { q: "א' בשיטת אר\"י: מה המשמעות של 'ארצית'?", opts: ["כל הארץ אזור בחירה אחד ל-120 מנדטים", "כל עיר בוחרת נציג משלה"], good: 0 },
+        { q: "ר' בשיטת אר\"י: מה המשמעות של 'רשימתית'?", opts: ["בוחרים פתק של רשימת מועמדים סגורה של מפלגה", "הבוחר כותב שמות של מועמדים בעט"], good: 0 },
+        { q: "י' בשיטת אר\"י: מהו אחוז החסימה ביחסית?", opts: ["3.25% מהקולות הכשרים", "5% מהקולות הכשרים"], good: 0 }
+      ];
+      const grid = document.getElementById("ariGrid");
+      grid.innerHTML = "";
+      ariQuestions.forEach(item => {
+        const box = document.createElement("div");
+        box.className = "step-card";
+        box.style.marginBottom = "0";
+        const p = document.createElement("div");
+        p.style.fontWeight = "800";
+        p.style.marginBottom = "8px";
+        p.textContent = item.q;
+        box.appendChild(p);
+        item.opts.forEach((o, i) => {
+          const b = document.createElement("button");
+          b.type = "button";
+          b.className = "opt-btn";
+          b.style.width = "100%";
+          b.style.marginBottom = "6px";
+          b.textContent = o;
+          b.addEventListener("click", () => {
+            if (i === item.good) {
+              b.classList.add("correct");
+              awardPoint("sovereignty", 8);
+            } else {
+              b.classList.add("wrong");
+              penalizeStreak();
+            }
+          });
+          box.appendChild(b);
+        });
+        grid.appendChild(box);
+      });
+    }
+
+    // ========= 11. GAME 4 LOGIC: BUILDER =========
+    let bIdx = 0;
+    let bSelected = [null, null, null];
+
+    function renderBuilder() {
+      bSelected = [null, null, null];
+      const ex = BUILDER_EXERCISES[bIdx];
+      document.getElementById("builderCounter").textContent = `תרגיל ${bIdx + 1} מתוך ${BUILDER_EXERCISES.length}`;
+      document.getElementById("builderStory").textContent = ex.story;
+      const rub = document.getElementById("builderRubric");
+      rub.className = "rubric-box";
+      rub.textContent = "";
+
+      [ex.step1, ex.step2, ex.step3].forEach((step, sIndex) => {
+        const container = document.getElementById(`builderStep${sIndex + 1}`);
+        container.innerHTML = "";
+        const correctText = step.opts[step.correct];
+        shuffleArray(step.opts).forEach(text => {
+          const b = document.createElement("button");
+          b.type = "button";
+          b.className = "opt-btn";
+          b.textContent = text;
+          b.addEventListener("click", () => {
+            container.querySelectorAll(".opt-btn").forEach(x => x.style.outline = "none");
+            b.style.outline = "3px solid var(--secondary)";
+            bSelected[sIndex] = text === correctText;
+          });
+          container.appendChild(b);
+        });
+      });
+    }
+
+    document.getElementById("builderCheckBtn").addEventListener("click", () => {
+      const ex = BUILDER_EXERCISES[bIdx];
+      if (bSelected.some(x => x === null)) {
+        alert("בחרי תשובה בכל שלושת השלבים (ציין, הצג, הסבר)!");
+        return;
+      }
+      const rub = document.getElementById("builderRubric");
+      const allGood = bSelected.every(Boolean);
+      if (allGood) {
+        awardPoint(null, 25);
+        rub.className = "rubric-box show";
+        rub.textContent = `🎉 100/100! ${ex.rubric}`;
+      } else {
+        penalizeStreak();
+        const wrongSteps = bSelected.map((ok, i) => ok ? null : i + 1).filter(Boolean).join(", ");
+        rub.className = "rubric-box show";
+        rub.textContent = `⚠️ כמעט! בדקי שוב את שלב/ים: ${wrongSteps}. ${ex.rubric}`;
+      }
+    });
+
+    document.getElementById("builderNextBtn").addEventListener("click", () => {
+      bIdx = (bIdx + 1) % BUILDER_EXERCISES.length;
+      renderBuilder();
+    });
+
+    function renderSummaryPanel() {
+      const container = document.getElementById("summaryContent");
+      container.innerHTML = "";
+      PRINCIPLES.forEach((p, idx) => {
+        const card = document.createElement("div");
+        card.className = "step-card";
+        card.style.marginBottom = "0";
+        const h = document.createElement("h3");
+        h.textContent = `${idx + 1}. ${p.emoji} ${p.name} — (${p.tag})`;
+        const desc = document.createElement("p");
+        desc.style.margin = "4px 0 8px";
+        desc.style.fontWeight = "600";
+        desc.textContent = p.desc;
+        const ul = document.createElement("ul");
+        ul.className = "modal-list";
+        p.points.forEach(pt => {
+          const li = document.createElement("li");
+          li.textContent = pt;
+          ul.appendChild(li);
+        });
+        const trap = document.createElement("div");
+        trap.className = "trap-alert";
+        trap.textContent = p.trap;
+        card.append(h, desc, ul, trap);
+        container.appendChild(card);
+      });
+    }
+
+    // ========= INIT =========
+    renderStats();
+    renderMasteryGrid();
+    renderDetective();
+    startSortRound();
+    renderRecallSlots();
+    renderAri();
+    renderBuilder();
+    renderSummaryPanel();
+  </script>
+</body>
+</html>
